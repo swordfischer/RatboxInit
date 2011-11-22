@@ -1,0 +1,4 @@
+RATBOX_EXEC="/usr/local/ircd/bin/ircd"
+RATBOX_USER="ratbox"
+RATBOX_PID="/usr/local/ircd/bin/ircd.pid"
+RATBOX_CONF="/etc/ratbox.conf"

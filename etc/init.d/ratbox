@@ -1,0 +1,34 @@
+#!/sbin/runscript
+# Copyright 1999-2011 Gentoo Foundation
+# Distributed under the terms of the GNU General Public License v2
+# $Header: $
+
+depend() {
+	need net
+}
+
+start() {
+	ebegin "Starting ratbox"
+	start-stop-daemon --start --exec ${RATBOX_EXEC} \
+	--pidfile ${RATBOX_PID} --user ${RATBOX_USER} \
+	-- -pidfile ${RATBOX_PID} -configfile ${RATBOX_CONF}
+	eend $?
+}
+
+stop() {
+        ebegin "Stopping ratbox"
+        start-stop-daemon --stop --exec ${RATBOX_EXEC} \
+        --pidfile ${RATBOX_PID} --user ${RATBOX_USER} \
+        eend $?
+}
+
+restart() {
+        if [ ! -f "${RATBOX_PID}" ]; then
+                eerror "ratbox is not running"
+        return 1
+        fi
+        ebegin "Reloading ratbox"
+        start-stop-daemon --signal HUP --pidfile "${RATBOX_PID}" \
+                --exec ${RATBOX_EXEC}
+        eend $?
+}
